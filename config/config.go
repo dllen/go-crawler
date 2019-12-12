@@ -3,6 +3,7 @@ package config
 import "github.com/BurntSushi/toml"
 
 var Conf *Config
+var metaData toml.MetaData
 
 type Config struct {
 	Name       string `toml:"name"`
@@ -19,8 +20,10 @@ type Config struct {
 }
 
 func InitConfig() error {
-	if _, err := toml.DecodeFile("crawler.toml", &Conf); err != nil {
+	data, err := toml.DecodeFile("crawler.toml", &Conf)
+	if err != nil {
 		return err
 	}
+	metaData = data
 	return nil
 }

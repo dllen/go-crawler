@@ -1,10 +1,8 @@
-package spider
+package crawler
 
 import (
 	"github.com/dllen/go-crawler/model"
 	"github.com/dllen/go-crawler/pipline"
-	"github.com/dllen/go-crawler/pipline/console"
-	"github.com/dllen/go-crawler/pipline/file"
 	"github.com/dllen/go-crawler/process"
 	json_process "github.com/dllen/go-crawler/process/json"
 	template_process "github.com/dllen/go-crawler/process/template"
@@ -73,11 +71,11 @@ func InitWithTask(task *model.Task) *Spider {
 	}
 	switch task.Pipline {
 	case "console":
-		s.Pipline = console.NewConsolePipline()
+		s.Pipline = pipline.NewConsolePipline()
 	case "file":
-		s.Pipline = file.NewFilePipline("./")
+		s.Pipline = pipline.NewFilePipline("./")
 	default:
-		s.Pipline = file.NewFilePipline("./")
+		s.Pipline = pipline.NewFilePipline("./")
 	}
 	return s
 }

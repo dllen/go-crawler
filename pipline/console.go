@@ -1,4 +1,4 @@
-package console
+package pipline
 
 import (
 	"encoding/json"
