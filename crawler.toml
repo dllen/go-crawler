@@ -1,0 +1,13 @@
+# This is a TOML document. Boom.
+
+name="GoCrawler"
+version="v0.01"
+work_num=10
+max_wait_num=5
+http_addr=""
+redis_addr=""
+schedule=""
+etcd=[]
+mysql=""
+
+
