@@ -135,9 +135,9 @@ func (s *SpiderRuntime) worker() {
 				logger.Info("Process page is nil")
 				continue
 			}
-			s.TaskMeta.WaitUrlNum = s.schedule.Count()
+			s.TaskMeta.WaitURLNum = s.schedule.Count()
 			if page.Urls != nil && len(page.Urls) > 0 {
-				atomic.AddInt32(&s.TaskMeta.UrlNum, int32(len(page.Urls)))
+				atomic.AddInt32(&s.TaskMeta.URLNum, int32(len(page.Urls)))
 				go func() {
 					s.schedule.PushMuti(page.Urls)
 				}()

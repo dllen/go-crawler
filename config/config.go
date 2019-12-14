@@ -1,6 +1,11 @@
 package config
 
-import "github.com/BurntSushi/toml"
+import (
+	"encoding/json"
+
+	"github.com/BurntSushi/toml"
+	"github.com/dllen/go-crawler/logger"
+)
 
 var Conf *Config
 var metaData toml.MetaData
@@ -11,7 +16,6 @@ type Config struct {
 	WorkNum    int    `toml:"work_num"`
 	MaxWaitNum int    `toml:"max_wait_num"`
 
-	HttpAddr     string   `toml:"http_addr"`
 	RedisAddr    string   `toml:"redis_addr"`
 	ScheduleMode string   `toml:"schedule"`
 	Etcd         []string `toml:"etcd"`
@@ -24,6 +28,8 @@ func InitConfig() error {
 	if err != nil {
 		return err
 	}
+	bytes, _ := json.Marshal(Conf)
+	logger.Info("Init config ", string(bytes))
 	metaData = data
 	return nil
 }

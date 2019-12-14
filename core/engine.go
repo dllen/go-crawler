@@ -4,22 +4,23 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/dllen/go-crawler/logger"
 	"github.com/dllen/go-crawler/spider"
 	"github.com/kataras/go-errors"
 )
 
-var engineI *Engine
+var engine *Engine
 var once sync.Once
 
 func New() *Engine {
 	once.Do(func() {
-		engineI = &Engine{spiders: make(map[string]*SpiderRuntime)}
+		engine = &Engine{spiders: make(map[string]*SpiderRuntime)}
 	})
-	return engineI
+	return engine
 }
 
 func GetEnine() *Engine {
-	return engineI
+	return engine
 }
 
 type Engine struct {
@@ -29,6 +30,7 @@ type Engine struct {
 func (m *Engine) AddSpider(spider *spider.Spider) *Engine {
 	spiderRuntime := NewSpiderRuntime()
 	spiderRuntime.SetSpider(spider)
+	logger.Info("Add SpiderRuntime ", spider.Name, spiderRuntime.workNum)
 	m.spiders[spider.Name] = spiderRuntime
 	return m
 }
