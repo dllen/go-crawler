@@ -28,8 +28,8 @@ type WorkerInfo struct {
 type SpiderData struct {
 	DownloadFailCount int32 `json:"download_fail_count"`
 	DownloadCount     int32 `json:"download_count"`
-	UrlNum            int32 `json:"url_num"`
-	WaitUrlNum        int   `json:"wait_url_num"`
+	URLNum            int32 `json:"url_num"`
+	WaitURLNum        int   `json:"wait_url_num"`
 	CrawlerResultNum  int32 `json:"crawler_result_num"`
 }
 
@@ -82,8 +82,8 @@ func getSpiderData() map[string]*SpiderData {
 		data.CrawlerResultNum = meta.CrawlerResultNum
 		data.DownloadFailCount = meta.DownloadFailCount
 		data.DownloadCount = meta.DownloadCount
-		data.WaitUrlNum = meta.WaitUrlNum
-		data.UrlNum = meta.UrlNum
+		data.WaitURLNum = meta.WaitURLNum
+		data.URLNum = meta.URLNum
 		datas[name] = data
 	}
 	return datas

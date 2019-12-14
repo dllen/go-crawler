@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/dllen/go-crawler/crawler"
+	crawler "github.com/dllen/go-crawler"
 	"github.com/dllen/go-crawler/model"
+	"github.com/dllen/go-crawler/spider"
 )
 
 func main() {
@@ -61,9 +62,9 @@ func main() {
 				},
 			},
 		},
-		Pipline: "file",
+		Pipline: "console",
 	}
 	app := crawler.New()
-	app.AddSpider(crawler.InitWithTask(task))
+	app.AddSpider(spider.InitWithTask(task))
 	app.Run()
 }

@@ -2,9 +2,10 @@ package core
 
 import (
 	"fmt"
+	"sync"
+
 	"github.com/dllen/go-crawler/spider"
 	"github.com/kataras/go-errors"
-	"sync"
 )
 
 var engineI *Engine

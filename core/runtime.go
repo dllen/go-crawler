@@ -23,7 +23,7 @@ type SpiderRuntime struct {
 	workNum     int
 	schedule    schedule.Schedule
 	spider      *spider.Spider
-	stopSign    bool
+	stopFlag    bool
 	recoverChan chan int
 	TaskMeta    *TaskMeta
 }
@@ -31,8 +31,8 @@ type SpiderRuntime struct {
 type TaskMeta struct {
 	DownloadFailCount int32 `json:"download_fail_count"`
 	DownloadCount     int32 `json:"download_fail_count"`
-	UrlNum            int32 `json:"url_num"`
-	WaitUrlNum        int   `json:"wait_url_num"`
+	URLNum            int32 `json:"url_num"`
+	WaitURLNum        int   `json:"wait_url_num"`
 	CrawlerResultNum  int32 `json:"crawler_result_num"`
 }
 
@@ -46,8 +46,8 @@ func NewSpiderRuntime() *SpiderRuntime {
 	s.schedule = schedule.GetSchedule(config.Conf)
 	s.recoverChan = make(chan int)
 	meta := &TaskMeta{}
-	meta.WaitUrlNum = 0
-	meta.UrlNum = int32(0)
+	meta.WaitURLNum = 0
+	meta.URLNum = int32(0)
 	meta.DownloadCount = int32(0)
 	meta.DownloadFailCount = int32(0)
 	meta.CrawlerResultNum = int32(0)
@@ -65,7 +65,7 @@ func (s *SpiderRuntime) GetSpider() *spider.Spider {
 }
 
 func (s *SpiderRuntime) Run() {
-	if s.stopSign {
+	if s.stopFlag {
 		s.recoverChan <- 1
 		return
 	}
@@ -77,15 +77,15 @@ func (s *SpiderRuntime) Run() {
 }
 
 func (s *SpiderRuntime) Stop() {
-	s.stopSign = true
+	s.stopFlag = true
 }
 
 func (s *SpiderRuntime) worker() {
 	context := model.Context{}
 	for {
-		if s.stopSign {
+		if s.stopFlag {
 			_, ok := <-s.recoverChan
-			s.stopSign = false
+			s.stopFlag = false
 			if !ok {
 				goto exit
 			}
@@ -122,13 +122,13 @@ func (s *SpiderRuntime) worker() {
 		ps, ok := s.spider.Process[req.ProcessName]
 		if !ok {
 			response.Body.Close()
-			logger.Info("process is not find ! please call SetProcess|SetTask")
+			logger.Info("Process is not find ! please call SetProcess|SetTask")
 			break
 		}
 		for _, p := range ps {
 			page, err := processWrapper(p, context)
 			if err != nil {
-				logger.Info("Process fail|", err.Error())
+				logger.Info("Process fail | ", err.Error())
 				continue
 			}
 			if page == nil {
@@ -166,7 +166,6 @@ func processWrapper(p process.Process, context model.Context) (*model.Page, erro
 }
 
 func (s *SpiderRuntime) download(req *model.Request) (*http.Response, error) {
-	//time.Sleep(1*time.Second)
 	switch req.Method {
 	case "get":
 		return downloader.Get(req.ProcessName, req.Url)

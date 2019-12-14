@@ -3,15 +3,16 @@ package filter
 import (
 	"crypto/md5"
 	"fmt"
-	"github.com/dllen/go-crawler/model"
 	"sync"
+
+	"github.com/dllen/go-crawler/model"
 )
 
-var Filter map[string]int
+var Cache map[string]int
 var lock sync.RWMutex
 
 func init() {
-	Filter = make(map[string]int)
+	Cache = make(map[string]int)
 }
 
 func RepeatFilter(url string, process *model.Process) bool {
@@ -27,12 +28,12 @@ func RepeatFilter(url string, process *model.Process) bool {
 func get(str string) bool {
 	lock.RLock()
 	defer lock.RUnlock()
-	_, ok := Filter[str]
+	_, ok := Cache[str]
 	return ok
 }
 
 func put(str string) {
 	lock.Lock()
 	defer lock.Unlock()
-	Filter[str] = 1
+	Cache[str] = 1
 }

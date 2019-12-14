@@ -3,6 +3,7 @@ package crawler
 import (
 	"github.com/dllen/go-crawler/config"
 	"github.com/dllen/go-crawler/core"
+	"github.com/dllen/go-crawler/spider"
 )
 
 func init() {
@@ -22,7 +23,7 @@ func New() *Boot {
 	return s
 }
 
-func (s *Boot) AddSpider(spider *Spider) *core.Engine {
+func (s *Boot) AddSpider(spider *spider.Spider) *core.Engine {
 	return s.engine.AddSpider(spider)
 }
 

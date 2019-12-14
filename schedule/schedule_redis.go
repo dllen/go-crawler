@@ -41,15 +41,15 @@ func (r *RedisSchedule) Push(req *model.Request) {
 
 	praseReqs := common.PraseReq([]*model.Request{req}, nil)
 	for _, req := range praseReqs {
-		logger.Info("Push Url:", req.Url, req.ProcessName)
+		logger.Info("Push URL:", req.Url, req.ProcessName)
 		body, err := req.Write()
 		if err != nil {
-			logger.Info("Push Url:", err.Error())
+			logger.Info("Push URL:", err.Error())
 			continue
 		}
 		_, err = conn.Do("LPUSH", r.name, body)
 		if err != nil {
-			logger.Info("Push Url:", err.Error())
+			logger.Info("Push URL:", err.Error())
 			continue
 		}
 	}
@@ -61,15 +61,15 @@ func (r *RedisSchedule) PushMuti(reqs []*model.Request) {
 
 	praseReqs := common.PraseReq(reqs, nil)
 	for _, req := range praseReqs {
-		logger.Info("Push Url:", req.Url, req.ProcessName)
+		logger.Info("Push URL:", req.Url, req.ProcessName)
 		body, err := req.Write()
 		if err != nil {
-			logger.Info("Push Url:", err.Error())
+			logger.Info("Push URL:", err.Error())
 			continue
 		}
 		_, err = conn.Do("LPUSH", r.name, body)
 		if err != nil {
-			logger.Info("Push Url:", err.Error())
+			logger.Info("Push URL:", err.Error())
 			continue
 		}
 	}

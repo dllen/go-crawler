@@ -14,11 +14,11 @@ type FilePipline struct {
 	files map[string]*os.File
 }
 
-func NewFilePipline(root string) *FilePipline {
-	return &FilePipline{root: root, files: make(map[string]*os.File)}
+func NewFilePipline(root string) FilePipline {
+	return FilePipline{root: root, files: make(map[string]*os.File)}
 }
 
-func (c *FilePipline) ProcessData(v []map[string]interface{}, taskName string, processName string) {
+func (c FilePipline) ProcessData(v []map[string]interface{}, taskName string, processName string) {
 	file, ok := c.files[processName]
 	if !ok {
 		var f *os.File
@@ -45,7 +45,7 @@ func (c *FilePipline) ProcessData(v []map[string]interface{}, taskName string, p
 	return
 }
 
-func (c *FilePipline) Close() {
+func (c FilePipline) Close() {
 	for _, f := range c.files {
 		f.Close()
 	}

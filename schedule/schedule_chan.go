@@ -20,7 +20,7 @@ func NewChanSchedule(config *config.Config) Schedule {
 func (d *ChanSchedule) Push(req *model.Request) {
 	praseReqs := common.PraseReq([]*model.Request{req}, nil)
 	for _, req := range praseReqs {
-		logger.Info("Push Url:", req.Url, req.ProcessName, len(d.waitQueue))
+		logger.Info("Push URL:", req.Url, req.ProcessName, len(d.waitQueue))
 		d.waitQueue <- req
 	}
 }
@@ -28,7 +28,7 @@ func (d *ChanSchedule) Push(req *model.Request) {
 func (d *ChanSchedule) PushMuti(reqs []*model.Request) {
 	praseReqs := common.PraseReq(reqs, nil)
 	for _, req := range praseReqs {
-		logger.Info("Push Url:", req.Url, req.ProcessName, len(d.waitQueue))
+		logger.Info("Push URL:", req.Url, req.ProcessName, len(d.waitQueue))
 		d.waitQueue <- req
 	}
 }
