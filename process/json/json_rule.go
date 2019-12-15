@@ -58,7 +58,7 @@ func Process(process *model.Process, context model.Context) (*model.Page, error)
 					data[key] = nodeMap[value]
 				}
 				if len(process.AddQueue) > 0 {
-					page.AddUrls(common.PraseReq(process.AddQueue, data))
+					page.AddUrls(common.ParseReq(process.AddQueue, data))
 				}
 				page.AddResult(data)
 			}
@@ -89,7 +89,7 @@ func Process(process *model.Process, context model.Context) (*model.Page, error)
 		}
 
 		if len(process.AddQueue) > 0 {
-			page.AddUrls(common.PraseReq(process.AddQueue, result))
+			page.AddUrls(common.ParseReq(process.AddQueue, result))
 		}
 		page.AddResult(result)
 	}
@@ -113,7 +113,7 @@ func Process(process *model.Process, context model.Context) (*model.Page, error)
 		}
 		page.Urls = []*model.Request{}
 		if len(process.AddQueue) > 0 {
-			page.AddUrls(common.PraseReq(process.AddQueue, result))
+			page.AddUrls(common.ParseReq(process.AddQueue, result))
 		}
 	}
 	return page, nil

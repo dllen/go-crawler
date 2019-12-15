@@ -3,7 +3,7 @@
 name="GoCrawler"
 version="v0.01"
 work_num=10
-max_wait_num=5
+max_wait_num=100
 redis_addr=""
 schedule=""
 etcd=[]

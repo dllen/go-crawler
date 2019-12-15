@@ -39,8 +39,8 @@ func (r *RedisSchedule) Push(req *model.Request) {
 	conn := r.pool.Get()
 	defer conn.Close()
 
-	praseReqs := common.PraseReq([]*model.Request{req}, nil)
-	for _, req := range praseReqs {
+	ParseReqs := common.ParseReq([]*model.Request{req}, nil)
+	for _, req := range ParseReqs {
 		logger.Info("Push URL:", req.Url, req.ProcessName)
 		body, err := req.Write()
 		if err != nil {
@@ -55,12 +55,12 @@ func (r *RedisSchedule) Push(req *model.Request) {
 	}
 }
 
-func (r *RedisSchedule) PushMuti(reqs []*model.Request) {
+func (r *RedisSchedule) PushMulti(reqs []*model.Request) {
 	conn := r.pool.Get()
 	defer conn.Close()
 
-	praseReqs := common.PraseReq(reqs, nil)
-	for _, req := range praseReqs {
+	ParseReqs := common.ParseReq(reqs, nil)
+	for _, req := range ParseReqs {
 		logger.Info("Push URL:", req.Url, req.ProcessName)
 		body, err := req.Write()
 		if err != nil {

@@ -69,11 +69,10 @@ func (s *SpiderRuntime) Run() {
 		s.recoverChan <- 1
 		return
 	}
-	s.schedule.PushMuti(s.spider.GetRequests())
-
 	for i := 0; i < s.workNum; i++ {
 		go s.worker()
 	}
+	s.schedule.PushMulti(s.spider.GetRequests())
 }
 
 func (s *SpiderRuntime) Stop() {
@@ -139,7 +138,7 @@ func (s *SpiderRuntime) worker() {
 			if page.Urls != nil && len(page.Urls) > 0 {
 				atomic.AddInt32(&s.TaskMeta.URLNum, int32(len(page.Urls)))
 				go func() {
-					s.schedule.PushMuti(page.Urls)
+					s.schedule.PushMulti(page.Urls)
 				}()
 			}
 			if page.ResultCount > 0 {

@@ -9,7 +9,7 @@ import (
 	"github.com/dllen/go-crawler/model"
 )
 
-func PraseReq(reqs []*model.Request, ctx map[string]interface{}) []*model.Request {
+func ParseReq(reqs []*model.Request, ctx map[string]interface{}) []*model.Request {
 	resultsReqs := []*model.Request{}
 	for _, req := range reqs {
 		results, ok := isRuleReq(req, ctx)
@@ -41,10 +41,10 @@ func isRuleReq(req *model.Request, ctx map[string]interface{}) ([]*model.Request
 	}
 
 	if ctx != nil {
-		reqs, isMatch = PraseParamCtx(req, rules, ctx)
+		reqs, isMatch = ParseParamCtx(req, rules, ctx)
 	}
 	for _, r := range reqs {
-		outReqs = append(outReqs, PraseOffset(r)...)
+		outReqs = append(outReqs, ParseOffset(r)...)
 	}
 
 	for _, r := range outReqs {
@@ -59,9 +59,9 @@ func isRuleReq(req *model.Request, ctx map[string]interface{}) ([]*model.Request
 }
 
 // http://xxxxxxxx.com/abc/{begin-end,offset}/   example:{1-400,10}
-func PraseOffset(req *model.Request) []*model.Request {
+func ParseOffset(req *model.Request) []*model.Request {
 	reqs := []*model.Request{}
-	outrReqs := []*model.Request{}
+	outerReqs := []*model.Request{}
 
 	rules := FindRule(req.Url)
 	if len(rules) <= 0 {
@@ -70,8 +70,8 @@ func PraseOffset(req *model.Request) []*model.Request {
 
 	var begin, end, offset int
 	var rule string
-	for _, rulee := range rules {
-		rule = rulee[1]
+	for _, ruleItem := range rules {
+		rule = ruleItem[1]
 		sp := strings.Split(rule, ",")
 
 		if len(sp) != 2 {
@@ -105,16 +105,16 @@ func PraseOffset(req *model.Request) []*model.Request {
 	}
 
 	for _, r := range reqs {
-		outrReqs = append(outrReqs, PraseOffset(r)...)
+		outerReqs = append(outerReqs, ParseOffset(r)...)
 	}
 
-	return outrReqs
+	return outerReqs
 }
 
 // http://xxxxxxxx.com/abc/{id1|id2|id3}/
 func PraseOr(req *model.Request) []*model.Request {
 	reqs := []*model.Request{}
-	outrReqs := []*model.Request{}
+	outerReqs := []*model.Request{}
 
 	rules := FindRule(req.Url)
 	if len(rules) <= 0 {
@@ -134,14 +134,14 @@ func PraseOr(req *model.Request) []*model.Request {
 	}
 
 	for _, r := range reqs {
-		outrReqs = append(outrReqs, PraseOr(r)...)
+		outerReqs = append(outerReqs, PraseOr(r)...)
 	}
 
-	return outrReqs
+	return outerReqs
 }
 
 // http://xxxxxxxx.com/abc/{name}/{id}/
-func PraseParamCtx(req *model.Request, rules [][]string, ctx map[string]interface{}) ([]*model.Request, bool) {
+func ParseParamCtx(req *model.Request, rules [][]string, ctx map[string]interface{}) ([]*model.Request, bool) {
 	reqs := []*model.Request{}
 	reqUrl := req.Url
 

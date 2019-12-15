@@ -7,7 +7,7 @@ import (
 
 type Schedule interface {
 	Push(req *model.Request)
-	PushMuti(reqs []*model.Request)
+	PushMulti(reqs []*model.Request)
 	Pop() (*model.Request, bool)
 	Count() int
 	Close()

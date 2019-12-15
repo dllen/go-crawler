@@ -19,7 +19,7 @@ func New() *Engine {
 	return engine
 }
 
-func GetEnine() *Engine {
+func GetEngine() *Engine {
 	return engine
 }
 

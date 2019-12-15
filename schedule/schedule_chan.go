@@ -18,16 +18,16 @@ func NewChanSchedule(config *config.Config) Schedule {
 }
 
 func (d *ChanSchedule) Push(req *model.Request) {
-	praseReqs := common.PraseReq([]*model.Request{req}, nil)
-	for _, req := range praseReqs {
+	parseReqs := common.ParseReq([]*model.Request{req}, nil)
+	for _, req := range parseReqs {
 		logger.Info("Push URL:", req.Url, req.ProcessName, len(d.waitQueue))
 		d.waitQueue <- req
 	}
 }
 
-func (d *ChanSchedule) PushMuti(reqs []*model.Request) {
-	praseReqs := common.PraseReq(reqs, nil)
-	for _, req := range praseReqs {
+func (d *ChanSchedule) PushMulti(reqs []*model.Request) {
+	ParseReqs := common.ParseReq(reqs, nil)
+	for _, req := range ParseReqs {
 		logger.Info("Push URL:", req.Url, req.ProcessName, len(d.waitQueue))
 		d.waitQueue <- req
 	}

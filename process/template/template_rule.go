@@ -53,7 +53,7 @@ func TemplateRuleProcess(process *model.Process, context model.Context) (*model.
 				return
 			}
 			if len(process.AddQueue) > 0 {
-				page.AddUrls(common.PraseReq(process.AddQueue, data))
+				page.AddUrls(common.ParseReq(process.AddQueue, data))
 			}
 			page.AddResult(data)
 		})
@@ -61,7 +61,7 @@ func TemplateRuleProcess(process *model.Process, context model.Context) (*model.
 	if resultType == "map" {
 		data := getMapFromDom(rule, doc.Selection)
 		if len(process.AddQueue) > 0 {
-			page.AddUrls(common.PraseReq(process.AddQueue, data))
+			page.AddUrls(common.ParseReq(process.AddQueue, data))
 		}
 		page.AddResult(data)
 	}
