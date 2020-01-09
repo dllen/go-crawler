@@ -1,4 +1,4 @@
-package pipline
+package pipeline
 
 import (
 	"encoding/json"
@@ -9,23 +9,23 @@ import (
 	"github.com/dllen/go-crawler/logger"
 )
 
-type FilePipline struct {
+type FilePipeline struct {
 	root  string
 	files map[string]*os.File
 }
 
-func NewFilePipline(root string) FilePipline {
-	return FilePipline{root: root, files: make(map[string]*os.File)}
+func NewFilePipeline(root string) FilePipeline {
+	return FilePipeline{root: root, files: make(map[string]*os.File)}
 }
 
-func (c FilePipline) ProcessData(v []map[string]interface{}, taskName string, processName string) {
+func (c FilePipeline) ProcessData(v []map[string]interface{}, taskName string, processName string) {
 	file, ok := c.files[processName]
 	if !ok {
 		var f *os.File
 		var err error
 		path := fmt.Sprintf("%s%s-%s.txt", c.root, taskName, processName)
 		if f, err = os.OpenFile(path, os.O_CREATE|os.O_RDWR, 0666); err != nil {
-			logger.Error("FilePipline Open File fail, path =", path, err)
+			logger.Error("FilePipeline Open File fail, path =", path, err)
 			return
 		}
 		f.WriteString(fmt.Sprintf("========= Task : %s =============\n", taskName))
@@ -36,16 +36,16 @@ func (c FilePipline) ProcessData(v []map[string]interface{}, taskName string, pr
 	for _, value := range v {
 		data, err := json.Marshal(value)
 		if err != nil {
-			logger.Error("FilePipline json.Marshal fail, v = ", v)
+			logger.Error("FilePipeline json.Marshal fail, v = ", v)
 			return
 		}
 		file.WriteString(string(data) + "\n")
 	}
-	logger.Info("File Pipline write. Count:", len(v))
+	logger.Info("File Pipeline write. Count:", len(v))
 	return
 }
 
-func (c FilePipline) Close() {
+func (c FilePipeline) Close() {
 	for _, f := range c.files {
 		f.Close()
 	}

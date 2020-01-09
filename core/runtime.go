@@ -1,8 +1,8 @@
 package core
 
 import (
+	"github.com/ddliu/go-httpclient"
 	"io/ioutil"
-	"net/http"
 	"sync"
 	"sync/atomic"
 
@@ -164,12 +164,12 @@ func processWrapper(p process.Process, context model.Context) (*model.Page, erro
 	return page, err
 }
 
-func (s *SpiderRuntime) download(req *model.Request) (*http.Response, error) {
+func (s *SpiderRuntime) download(req *model.Request) (*httpclient.Response, error) {
 	switch req.Method {
 	case "get":
-		return downloader.Get(req.ProcessName, req.Url)
+		return downloader.Get(req.ProcessName, req.Url,req.Header)
 	case "post":
-		return downloader.PostJson(req.ProcessName, req.Url, req.Data)
+		return downloader.PostJson(req.ProcessName, req.Url, req.Data, req.Header)
 	}
 
 	return nil, nil

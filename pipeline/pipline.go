@@ -1,5 +1,5 @@
-package pipline
+package pipeline
 
-type Pipline interface {
+type Pipeline interface {
 	ProcessData(v []map[string]interface{}, taskName string, processName string)
 }

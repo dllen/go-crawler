@@ -2,7 +2,7 @@ package spider
 
 import (
 	"github.com/dllen/go-crawler/model"
-	"github.com/dllen/go-crawler/pipline"
+	"github.com/dllen/go-crawler/pipeline"
 	"github.com/dllen/go-crawler/process"
 	json_process "github.com/dllen/go-crawler/process/json"
 	template_process "github.com/dllen/go-crawler/process/template"
@@ -15,10 +15,10 @@ type Spider struct {
 	EndCount int
 	Requests []*model.Request
 	Process  map[string][]process.Process
-	Pipline  pipline.Pipline
+	Pipline  pipeline.Pipeline
 }
 
-func (s *Spider) GetPipline() pipline.Pipline {
+func (s *Spider) GetPipline() pipeline.Pipeline {
 	return s.Pipline
 }
 
@@ -71,11 +71,11 @@ func InitWithTask(task *model.Task) *Spider {
 	}
 	switch task.Pipline {
 	case "console":
-		s.Pipline = pipline.NewConsolePipline()
+		s.Pipline = pipeline.NewConsolePipeline()
 	case "file":
-		s.Pipline = pipline.NewFilePipline("./")
+		s.Pipline = pipeline.NewFilePipeline("./")
 	default:
-		s.Pipline = pipline.NewConsolePipline()
+		s.Pipline = pipeline.NewConsolePipeline()
 	}
 	return s
 }

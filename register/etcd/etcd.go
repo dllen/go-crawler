@@ -75,7 +75,7 @@ func (w *Worker) HeartBeat() {
 }
 
 func getSpiderData() map[string]*SpiderData {
-	datas := make(map[string]*SpiderData)
+	spiderDataMap := make(map[string]*SpiderData)
 	metas := core.GetEngine().GetTaskMetas()
 	for name, meta := range metas {
 		data := &SpiderData{}
@@ -84,7 +84,7 @@ func getSpiderData() map[string]*SpiderData {
 		data.DownloadCount = meta.DownloadCount
 		data.WaitURLNum = meta.WaitURLNum
 		data.URLNum = meta.URLNum
-		datas[name] = data
+		spiderDataMap[name] = data
 	}
-	return datas
+	return spiderDataMap
 }

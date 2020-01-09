@@ -10,7 +10,7 @@ type Task struct {
 
 	Request []*Request `json:"request"`
 	Process []Process  `json:"process"`
-	Pipline string     `json:"pipline"`
+	Pipline string     `json:"pipeline"`
 
 	Depth    int `json:"depth"`
 	EndCount int `json:"end_count"`
